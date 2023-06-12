@@ -7,11 +7,16 @@ export default function App () {
     const [city,setCity] = useState('')
     const [keyWord,setkeyword] = useState('New york')
     const [weatherData,setWeatherData] = useState({})
+    const [showCelsius, setShowCelsius] = useState(true)
+    const [unit,setUnit] = useState('C')
 
-    console.log(weatherData)
+    const toggleCelsius = () => {
+        setShowCelsius((prevState)  => !prevState)
+        setUnit(prevState=> {if (prevState === 'C') return 'F'; return 'C'})
 
+    }
     const handleKeyPress = (e) =>{
-        if(e.key === 'Enter') if (e.target.value.length){setkeyword(e.target.value)}
+        if(e.key === 'Enter') if (e.target.value.length){setkeyword(e.target.value);setCity('')}
     }
 
             useEffect(() => {
@@ -33,9 +38,14 @@ export default function App () {
                     <h3>{weatherData?.location?.name}</h3>
                     <h4>{weatherData?.location?.country}</h4>
                     <div className="temperature">
-                        <h1 className="temperature--c">{weatherData?.current?.temp_c}<sup>&deg;C</sup></h1>
+                        <h1 className="temperature--c">{weatherData?.current?.[showCelsius ? 'temp_c' : 'temp_f']}
+                            <sup className={showCelsius ? 'disabled' : 'clickable'} onClick={toggleCelsius}>&deg;C</sup>
+                            <sup>{' '}|{' '}</sup>
+                            <sup className={!showCelsius ? 'disabled' : 'clickable'} onClick={toggleCelsius}> &deg;F</sup>
+                        </h1>
                         {/* <h5 className="temperature--f">{weatherData?.current?.temp_f}<sup>&deg;f</sup></h5> */}
-                        <h4 className="temperature--f">Feels like {weatherData?.current?.feelslike_c}<sup>&deg;c</sup></h4>
+                        {/* <h4 className="temperature--f">Feels like {weatherData?.current?.feelslike_c}<sup>&deg;c</sup></h4> */}
+                        <h4 className="temperature--f">Feels like {weatherData?.current?.[showCelsius ? 'feelslike_c': 'feelslike_f']}<sup>&deg;{unit}</sup></h4>
                     </div>
                 </div>
 
@@ -44,8 +54,8 @@ export default function App () {
                     <p> {weatherData?.current?.condition.text} </p>
 
                     <div className="minmax">
-                        <h5>High: {weatherData?.forecast?.forecastday[0].day.maxtemp_c}</h5>
-                        <h5>Low: {weatherData?.forecast?.forecastday[0].day.mintemp_c}</h5>
+                        <h5>High: {weatherData?.forecast?.forecastday[0].day?.[showCelsius ? 'maxtemp_c': 'maxtemp_f']}<sup>&deg;{unit}</sup></h5>
+                        <h5>Low: {weatherData?.forecast?.forecastday[0].day?.[showCelsius ? 'mintemp_c' : 'mintemp_f']}<sup>&deg;{unit}</sup></h5>
                     </div>
                 </div>
 
@@ -54,7 +64,7 @@ export default function App () {
                 {weatherData?.forecast?.forecastday[0].hour.map((hour,index)=>(
                     <div key={index} className={`card ${!hour.is_day ? 'dark':''}`}>
                         <p>{hour.time.split(' ')[1]}</p>
-                        {hour.dewpoint_c} &deg;c
+                        {hour?.[showCelsius ? 'dewpoint_c' : 'dewpoint_f']} &deg;{unit}
                         <img src={hour.condition.icon} />
                     </div>
                 ))}

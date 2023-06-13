@@ -45,7 +45,7 @@ input{
     margin-right: 1rem;
     align-items: flex-start;
 }
-.left h3,h4{
+.left h3,h4,p{
     margin: 1rem 0;
 }
 .temperature{

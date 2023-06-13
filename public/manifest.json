@@ -1,0 +1,16 @@
+{
+    "short_name":"weather app",
+    "name" : " wather progressive web app",
+    "icons" : [
+        {"icon":"/images/logo.png",
+        "type":"image/png",
+        "sizes": "1024x1024"
+        }
+    ],
+    "theme_color":"#000000",
+    "background_color":"#ffffff",
+    "start_url" : ".",
+    "display" : "standalone"
+
+
+}

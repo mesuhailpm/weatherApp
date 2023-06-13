@@ -45,12 +45,12 @@ export default function App () {
                         </h1>
                         {/* <h5 className="temperature--f">{weatherData?.current?.temp_f}<sup>&deg;f</sup></h5> */}
                         {/* <h4 className="temperature--f">Feels like {weatherData?.current?.feelslike_c}<sup>&deg;c</sup></h4> */}
-                        <h4 className="temperature--f">Feels like {weatherData?.current?.[showCelsius ? 'feelslike_c': 'feelslike_f']}<sup>&deg;{unit}</sup></h4>
+                        <p className="temperature--f">Feels like {weatherData?.current?.[showCelsius ? 'feelslike_c': 'feelslike_f']}<sup>&deg;{unit}</sup></p>
                     </div>
                 </div>
 
                 <div className="right">
-                    <img src={weatherData?.current?.condition.icon}></img>
+                    <img src={weatherData?.current?.condition.icon} alt="weather-contion-icon" />
                     <p> {weatherData?.current?.condition.text} </p>
 
                     <div className="minmax">
@@ -65,7 +65,7 @@ export default function App () {
                     <div key={index} className={`card ${!hour.is_day ? 'dark':''}`}>
                         <p>{hour.time.split(' ')[1]}</p>
                         {hour?.[showCelsius ? 'dewpoint_c' : 'dewpoint_f']} &deg;{unit}
-                        <img src={hour.condition.icon} />
+                        <img src={hour.condition.icon} alt="weather-condition-icon" />
                     </div>
                 ))}
 
